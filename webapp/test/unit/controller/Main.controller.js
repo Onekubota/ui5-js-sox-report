@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"comewmyy1soxui5/yy1soxui5/controller/Main.controller"
+	"comewmyy1soxui5/controller/Main.controller"
 ], function (Controller) {
 	"use strict";
 

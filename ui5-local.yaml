@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: com.ewm.yy1soxui5.yy1soxui5
+  name: com.ewm.yy1soxui5
 type: application
 framework:
   name: SAPUI5
@@ -31,9 +31,10 @@ server:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
           - path: /sap
-            url: http://localhost
+            url: http://saps4dapp.kubota-kna.com:8000/
+            client: '200'
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: com.ewm.yy1soxui5.yy1soxui5
+        component: com.ewm.yy1soxui5
         ui5Theme: sap_fiori_3

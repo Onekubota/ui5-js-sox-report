@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: com.ewm.yy1soxui5.yy1soxui5
+  name: com.ewm.yy1soxui5
 type: application
 server:
   customMiddleware:
@@ -10,14 +10,17 @@ server:
       afterMiddleware: compression
       configuration:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        proxy: http://10.211.55.4:808
         ui5:
           path:
             - /resources
             - /test-resources
           url: https://ui5.sap.com
+          directLoad: true
         backend:
           - path: /sap
-            url: http://localhost
+            url: http://saps4dapp.kubota-kna.com:8000/
+            client: '300'
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
@@ -27,5 +30,5 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: com.ewm.yy1soxui5.yy1soxui5
+        component: com.ewm.yy1soxui5
         ui5Theme: sap_fiori_3
