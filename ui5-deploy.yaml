@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.5"
+metadata:
+  name: com.ewm.zewmsoxui5
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          url: https://saps4dapp.kubota-kna.com:8003/
+          client: "200"
+        app:
+          name: ZEWM_SOX_UI5
+          description: SOX Report Deployment
+          package: ZEWM
+          transport: S4DK966550

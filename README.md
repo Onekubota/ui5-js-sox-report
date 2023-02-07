@@ -10,7 +10,7 @@
 |**Service URL**<br>N/A
 |**Module Name**<br>yy1soxui5|
 |**Application Title**<br>SOX Segregation of Duties Report|
-|**Namespace**<br>com.ewm.yy1soxui5|
+|**Namespace**<br>com.ewm.zewmsoxui5|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>1.90.7|
 |**Enable Code Assist Libraries**<br>False|

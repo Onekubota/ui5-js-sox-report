@@ -16,10 +16,25 @@
                 <Property Name="DeliveryItem" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Item Number" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
                 <Property Name="CompleteDate" Type="Edm.DateTime" Precision="0" sap:unicode="false" sap:label="Completed On" sap:creatable="false" sap:updatable="false"/>
                 <Property Name="TimeZone" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Time Zone" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Step1User" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Step 1 User" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
-                <Property Name="Step2User" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Step 2 User" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Step1User" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
+                <Property Name="Step2User" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
                 <Property Name="Conflict" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="User Conflict" sap:creatable="false" sap:updatable="false" sap:filterable="false"/>
                 <Property Name="NoStep1Task" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Checkbox" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="SoxDataPdf" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Warehouse"/>
+                    <PropertyRef Name="Process"/>
+                    <PropertyRef Name="CompleteDateStart"/>
+                    <PropertyRef Name="CompleteDateEnd"/>
+                </Key>
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Warehouse No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Process" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Process" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CompleteDateStart" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Time Stamp" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CompleteDateEnd" Type="Edm.DateTime" Nullable="false" Precision="0" sap:unicode="false" sap:label="Time Stamp" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Filename" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Character 100" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Mimetype" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Character 100" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Content" Type="Edm.Binary" Nullable="false" sap:unicode="false" sap:label="CONTENT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
             <EntityType Name="VHxSCWMxSH_LGNUM" sap:content-version="1">
                 <Key>
@@ -29,7 +44,8 @@
                 <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
             </EntityType>
             <EntityContainer Name="ZEWM_SOX_SEG_DUTIES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
-                <EntitySet Name="SoxDataSet" EntityType="ZEWM_SOX_SEG_DUTIES_SRV.SoxData" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="SoxDataSet" EntityType="ZEWM_SOX_SEG_DUTIES_SRV.SoxData" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:requires-filter="true" sap:content-version="1"/>
+                <EntitySet Name="SoxDataPdfCollection" EntityType="ZEWM_SOX_SEG_DUTIES_SRV.SoxDataPdf" sap:content-version="1"/>
                 <EntitySet Name="VHxSCWMxSH_LGNUM" EntityType="ZEWM_SOX_SEG_DUTIES_SRV.VHxSCWMxSH_LGNUM" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:pageable="false" sap:content-version="1"/>
             </EntityContainer>
             <atom:link rel="self" href="http://saps4dapp.kubota-kna.com:8000/sap/opu/odata/sap/ZEWM_SOX_SEG_DUTIES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>

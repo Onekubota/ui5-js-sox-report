@@ -2,7 +2,7 @@
 
 specVersion: "2.5"
 metadata:
-  name: com.ewm.yy1soxui5
+  name: com.ewm.zewmsoxui5
 type: application
 framework:
   name: SAPUI5
@@ -36,5 +36,5 @@ server:
     - name: fiori-tools-preview
       afterMiddleware: fiori-tools-appreload
       configuration:
-        component: com.ewm.yy1soxui5
+        component: com.ewm.zewmsoxui5
         ui5Theme: sap_fiori_3
