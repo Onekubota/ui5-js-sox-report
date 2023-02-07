@@ -1,0 +1,259 @@
+<mvc:View
+    controllerName="com.ewm.zewmsoxui5.controller.Main"
+    xmlns:core="sap.ui.core"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartfield="sap.ui.comp.smartfield"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+	xmlns:layout="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+>
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <VBox id="filterBarContainerId" fitContainer="true">
+                <smartFilterBar:SmartFilterBar id="smartFilterBar" persistencyKey="_soxReportFilterBarKey_" entitySet="SoxDataSet" customData:useSmartField="true">
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration id="_IDCtrlConfWarehouse" key="Warehouse" visibleInAdvancedArea="true" filterType="single" mandatory="mandatory" />
+                    </smartFilterBar:controlConfiguration>
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration id="_IDCtrlConfProcess" key="Process" visibleInAdvancedArea="true" filterType="single" mandatory="mandatory">
+                            <smartFilterBar:customControl>
+                                <Select id="_IDCtrlConfProcessSelect" customData:hasValue="true" forceSelection="false" selectedKey="{ViewCache>/selectedFilterProcess}">
+                                    <core:Item id="_IDItemPDI" key="PDI" text="Inbound" />
+                                    <core:Item id="_IDItemPDO" key="PDO" text="Outbound" />
+                                </Select>
+                            </smartFilterBar:customControl>
+                        </smartFilterBar:ControlConfiguration>
+                    </smartFilterBar:controlConfiguration>
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration
+                            id="_IDCtrlConfCompleteDate"
+                            key="CompleteDate"
+                            visibleInAdvancedArea="true"
+                            mandatory="mandatory"
+                            label="{= 
+                                ${ViewCache>/selectedFilterProcess} === 'PDI' ? ${i18n>inbCompleteDateColText} : 
+                                    ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>outCompleteDateColText} : 
+                                        ${/#SoxData/CompleteDate/@sap:label} }"
+                            conditionType="{
+                                module: 'sap.ui.comp.config.condition.DateRangeType',
+                                ignoreTime: true,
+                                operations: {
+                                    filter: [
+                                        {path: 'category', contains: 'MONTH', exclude:true},
+                                        {path: 'key', equals: 'TO', exclude:true}
+                                    ]
+                                }
+                            }"
+                        />
+                    </smartFilterBar:controlConfiguration>
+                    <smartFilterBar:layoutData>
+                        <FlexItemData id="_IDGenFlexItemData1" shrinkFactor="0" />
+                    </smartFilterBar:layoutData>
+                </smartFilterBar:SmartFilterBar>
+
+                <f:Form id="idForm"
+                    editable="false">
+                    <f:layout>
+                        <f:ResponsiveGridLayout id="_IDGenResponsiveGridLayout1"
+                            labelSpanXL="4"
+                            labelSpanL="3"
+                            labelSpanM="12"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="0"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="4"
+                            columnsM="2"
+                            singleContainerFullSize="false" />
+                    </f:layout>
+                    <f:formContainers>
+                        <f:FormContainer id="_IDGenFormContainer1">
+                            <f:formElements>
+                                <f:FormElement id="_IDGenFormElement1" label="{i18n>titleSystemId}">
+                                    <f:fields>
+                                        <Text text="{ViewCache>/systemId}" id="textSysId"  />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement id="_IDGenFormElement2" label="{i18n>titleSystemUser}">
+                                    <f:fields>
+                                        <Text text="{ViewCache>/systemUser}" id="textSysUsr"  />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                        <f:FormContainer id="_IDGenFormContainer2">
+                            <f:formElements>
+                                <f:FormElement id="_IDGenFormElement3" label="{i18n>titleSystemDate}">
+                                    <f:fields>
+                                        <Text text="{ViewCache>/systemDate}" id="textSysDate"  />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement id="_IDGenFormElement4" label="{i18n>titleSystemTime}">
+                                    <f:fields>
+                                        <Text text="{ViewCache>/systemTime}" id="textSysTime"  />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                         <f:FormContainer id="_IDGenFormContainer3">
+                            <f:layoutData>
+                                <layout:GridData id="_IDGenGridData1" span="L6 M6 S12"/>
+                            </f:layoutData>
+                            <f:formElements>
+                                <f:FormElement id="_IDGenFormElement5">
+                                    <f:label>
+                                        <Label id="_IDGenLabel1" text="{= 
+                                            ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>labelNumOutDlvLines} : ${i18n>labelNumDlvLines} }">
+                                            <layoutData>
+                                                <layout:GridData id="_IDGenGridData2" span="L8 M6 S12"/>
+                                            </layoutData>
+                                        </Label>
+                                    </f:label>
+                                    <f:fields>
+                                        <Text id="_IDGenText4" text="{ViewCache>/numdlvlines}"/>
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement id="_IDGenFormElement6">
+                                    <f:label>
+                                        <Label id="_IDGenLabel2" text="{= 
+                                            ${ViewCache>/selectedFilterProcess} === 'PDI' ? ${i18n>labelTotRecvPutUsersText} : 
+                                                ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>labelTotPickPackUsersText} : 
+                                                    ${i18n>labelTotUsersText} }">
+                                            <layoutData>
+                                                <layout:GridData id="_IDGenGridData3" span="L8 M6 S12"/>
+                                            </layoutData>
+                                        </Label>
+                                    </f:label>
+                                    <f:fields>
+                                        <Text id="_IDGenText5" text="{ViewCache>/numsameusers}" />
+                                    </f:fields>
+                                </f:FormElement>
+                                <f:FormElement id="_IDGenFormElement7">
+                                    <f:label>
+                                        <Label id="_IDGenLabel3" text="{= 
+                                            ${ViewCache>/selectedFilterProcess} === 'PDI' ? ${i18n>labelPerRecvPutUsersText} : 
+                                                ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>labelPerPicPacUsersText} : 
+                                                    ${i18n>labelPerUsersText} }">
+                                            <layoutData>
+                                                <layout:GridData id="_IDGenGridData4" span="L8 M6 S12"/>
+                                            </layoutData>
+                                        </Label>
+                                    </f:label>
+                                    <f:fields>
+                                        <Text id="_IDGenText6" text="{= ${ViewCache>/pdiffusers} !== '' ? ${ViewCache>/pdiffusers} + ' %' : '' }"  />
+                                    </f:fields>
+                                </f:FormElement>
+                            </f:formElements>
+                        </f:FormContainer>
+                    </f:formContainers>
+                </f:Form>
+
+                <smartTable:SmartTable
+                    id="IdSoxDataTable"
+                    entitySet="SoxDataSet"
+                    persistencyKey="_soxReportDataTableKey_"
+                    tableType="ResponsiveTable"
+                    smartFilterId="smartFilterBar"
+                    header="{i18n>tableHeader}"
+                    enableAutoBinding="false"
+                    customData:useSmartField="true"
+                    editable="false"
+                    fitContainer="true"
+                    useExportToExcel="false"
+                    ignoreFromPersonalisation="TimeZone,Process,NoStep1Task"
+                    requestAtLeastFields="Warehouse,Process,Delivery,DeliveryItem"
+                    beforeRebindTable="onBeforeRebindTable">
+                    
+                    <smartTable:customToolbar>
+                        <Toolbar id="_IDGenToolbar1">
+                            <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                            <Button id="_IDGenButton1" icon="sap-icon://pdf-attachment" text="{i18n>btnPdfText}" type="Emphasized" press="_onPressExportPDF"/>
+                        </Toolbar>
+                    </smartTable:customToolbar>
+
+                    <Table id="_IDGenTable1" sticky="ColumnHeaders">
+                        <columns>
+                            <Column id="header.columnCompleteDate">
+                                <customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey":"CompleteDate","leadingProperty":"CompleteDate",
+																"filterProperty":"CompleteDate", "sortProperty":"CompleteDate", "columnIndex":"1","type":"date"}' />
+                                </customData>
+                                <Text id="column.text.CompleteDate" 
+                                    text="{= 
+                                    ${ViewCache>/selectedFilterProcess} === 'PDI' ? ${i18n>inbCompleteDateColText} : 
+                                        ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>outCompleteDateColText} : 
+                                            ${/#SoxData/CompleteDate/@sap:label} }" />
+                            </Column>
+                            <Column id="header.columnDelivery">
+                                <customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey":"Delivery","leadingProperty":"Delivery",
+																"filterProperty":"Delivery", "sortProperty":"Delivery", "columnIndex":"2"}' />
+                                </customData>
+                                <Text id="column.text.Delivery" 
+                                    text="{= 
+                                    ${ViewCache>/selectedFilterProcess} === 'PDI' ? ${i18n>inbDeliveryColText} : 
+                                        ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>outDeliveryColText} : 
+                                            ${/#SoxData/Delivery/@sap:label} }" />
+                            </Column>
+                            <Column id="header.columnStep1User">
+                                <customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey":"Step1User","leadingProperty":"Step1User",
+																"filterProperty":"Step1User", "sortProperty":"Step1User", "columnIndex":"4"}' />
+                                </customData>
+                                <Text id="column.text.Step1User" 
+                                    text="{= 
+                                    ${ViewCache>/selectedFilterProcess} === 'PDI' ? ${i18n>inbStep1UserColText} : 
+                                        ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>outStep1UserColText} : 
+                                            ${/#SoxData/Step1User/@sap:label} }" />
+                            </Column>
+                            <Column id="header.columnStep2User">
+                                <customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey":"Step2User","leadingProperty":"Step2User",
+																"filterProperty":"Step2User", "sortProperty":"Step2User", "columnIndex":"5"}' />
+                                </customData>
+                                <Text id="column.text.Step2User" 
+                                    text="{= 
+                                    ${ViewCache>/selectedFilterProcess} === 'PDI' ? ${i18n>inbStep2UserColText} : 
+                                        ${ViewCache>/selectedFilterProcess} === 'PDO' ? ${i18n>outStep2UserColText} : 
+                                            ${/#SoxData/Step2User/@sap:label} }" />
+                            </Column>
+                            <Column id="header.columnConflict" hAlign="Center">
+                                <customData>
+                                    <core:CustomData key="p13nData" value='\{"columnKey":"Conflict","leadingProperty":"Conflict",
+																"filterProperty":"Conflict", "sortProperty":"Conflict", "columnIndex":"6"}' />
+                                </customData>
+                                <Text id="column.text.Conflict" text="{/#SoxData/Conflict/@sap:label}" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem id="_IDGenColumnListItem1">
+                                <cells>
+                                    <Text text="{ 
+													path: 'CompleteDate', 
+													type:'sap.ui.model.type.DateTime', 
+													formatOptions: { style: 'medium', UTC:true,
+																	 pattern: 'MM/dd/yyyy' } }" id="item.CompleteDate" />
+                                    <Text id="_IDGenText1" text="{Delivery}" />
+                                    <Text id="_IDGenText2" text="{Step1User}" />
+                                    <Text id="_IDGenText3" text="{Step2User}" />
+                                    <smartfield:SmartField id="_idUserConflict" value="{Conflict}">
+                                        <smartfield:customData>
+                                            <core:CustomData key="uiConflict" value="{= ${Conflict} ? 'E' : 'S'}" writeToDom="true"/>
+                                        </smartfield:customData>
+                                    </smartfield:SmartField>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

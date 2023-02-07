@@ -1,0 +1,17 @@
+/*
+ Red background color in case of user conflict.
+ The conflict control has a custom data which writes to dom success 
+ or error for key "uiconflict".
+ */
+td[headers*="header.columnConflict"]:has(div[data-uiconflict="S"]) {
+    background: #d7f4d7;
+}
+
+/*
+ Green background color in case of "no" user conflict.
+ The conflict control has a custom data which writes to dom success 
+ or error for key "uiconflict".
+ */
+td[headers*="header.columnConflict"]:has(div[data-uiconflict="E"]) {
+    background: #ffcccc;
+}
