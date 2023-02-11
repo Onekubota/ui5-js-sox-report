@@ -12,7 +12,11 @@ sap.ui.define([
         "use strict";
 
         return Controller.extend("com.ewm.zewmsoxui5.controller.Main", {
+            /**
+            * Initialize View controller
+            */
             onInit: function () {
+                //Create local view model
                 this._oViewCache = new JSONModel({
                     selectedFilterProcess: "",
                     systemUser: "",
@@ -30,6 +34,10 @@ sap.ui.define([
                 this._oSmartTable = this.getView().byId("IdSoxDataTable");
             },
 
+            /**
+            * On before filter search, get Process key from custom field
+            * and set to filter parameter of event
+            */
             onBeforeRebindTable: function(oEvent) {
                 var mBindingParams = oEvent.getParameter("bindingParams");
                 var oSelect = this._oSmartFilter.getControlByKey("Process");
@@ -38,8 +46,11 @@ sap.ui.define([
                 mBindingParams.filters.push(newFilter);
             },
 
+            /**
+            * After receving data from backend, set the view header values from response header.
+            */
             onTableDataReceived: function(oEvent) {
-                this.oDataModel.setHeaders();
+                this.oDataModel.setHeaders();   //Reset previoius header values
                 var headers = oEvent.getParameter("response").headers;
                 if (headers.system) {
                     this._oViewCache.setProperty("/systemId", headers.system);
@@ -52,6 +63,9 @@ sap.ui.define([
                 }
             },
 
+            /**
+            * Export to PDF
+            */
             _onPressExportPDF: function(oEvent) {
                 var filterData = this._oSmartFilter.getFilterData();
                 var oSelect = this._oSmartFilter.getControlByKey("Process");
@@ -68,10 +82,12 @@ sap.ui.define([
                     }                    
                 }
                 
+                // If any filter parameter is not set, return.
                 if (warehouse === null || processKey === null || dateLow === null) {
                     return;
                 }
 
+                //Get read key for PDF entity 
                 var key = this.oDataModel.createKey("/SoxDataPdfSet", {
                     Warehouse: warehouse,
                     Process: processKey,
@@ -79,9 +95,11 @@ sap.ui.define([
                     CompleteDateEnd: dateHigh
                 });
 
+                //Show temporary message
                 var messageText = this.getView().getModel("i18n").getProperty("pdfDownloadText");
                 MessageToast.show(messageText);
 
+                //Create a temporary link for PDF URL and simulate a click to download the file.
                 var downloadUrl = `${this.oDataModel.sServiceUrl}${key}/$value`; 
                 var link = document.createElement("a");
                 link.download = "Sox Report.pdf";
