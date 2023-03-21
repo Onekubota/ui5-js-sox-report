@@ -71,6 +71,8 @@ sap.ui.define([
                 var oSelect = this._oSmartFilter.getControlByKey("Process");
                 var processKey = oSelect.getSelectedKey();
                 var warehouse = filterData.Warehouse;
+                var conflict = filterData.Conflict === undefined ? 0 : filterData.Conflict === "true" ? 1 : 2;
+
                 var date, dateLow, dateHigh = null;
                 if (filterData.CompleteDate) {
                     date = filterData.CompleteDate.ranges[0];
@@ -92,7 +94,8 @@ sap.ui.define([
                     Warehouse: warehouse,
                     Process: processKey,
                     CompleteDateStart: dateLow,
-                    CompleteDateEnd: dateHigh
+                    CompleteDateEnd: dateHigh,
+                    Conflict: conflict
                 });
 
                 //Show temporary message

@@ -50,6 +50,9 @@
                             }"
                         />
                     </smartFilterBar:controlConfiguration>
+                    <smartFilterBar:controlConfiguration>
+                        <smartFilterBar:ControlConfiguration id="_IDCtrlConfConflict" key="Conflict" visibleInAdvancedArea="true" filterType="single" />
+                    </smartFilterBar:controlConfiguration>
                     <smartFilterBar:layoutData>
                         <FlexItemData id="_IDGenFlexItemData1" shrinkFactor="0" />
                     </smartFilterBar:layoutData>

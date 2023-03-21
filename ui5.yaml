@@ -9,6 +9,7 @@ server:
     - name: fiori-tools-proxy
       afterMiddleware: compression
       configuration:
+        proxy: http://10.211.55.4:808
         ignoreCertError: false
         ui5:
           path:
@@ -19,7 +20,7 @@ server:
         backend:
           - path: /sap
             url: http://saps4dapp.kubota-kna.com:8000/
-            client: '200'
+            client: '300'
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
